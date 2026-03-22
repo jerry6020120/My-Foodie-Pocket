@@ -10,7 +10,8 @@
         .header h2 { margin: 0; color: #e67e22; font-size: 1.6rem; }
         .card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; }
         label { display: block; margin-top: 15px; font-weight: bold; font-size: 14px; color: #5d4037; }
-        input[type="text"], select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background-color: #fafafa; }
+        input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background-color: #fafafa; }
+        textarea { height: 80px; resize: none; }
         button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; }
         
         /* 星星樣式 */
@@ -18,14 +19,20 @@
         .star-rating input { display: none; }
         .star-rating label { color: #ddd; font-size: 26px; cursor: pointer; }
         .star-rating input:checked ~ label { color: #f1c40f; }
-        .rating-box { background: #fdf2e9; padding: 12px; border-radius: 12px; margin-bottom: 10px; }
+        .rating-box { background: #fdf2e9; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #f9e4d4; }
+        .rating-title { font-size: 12px; color: #8d6e63; font-weight: bold; margin-bottom: 3px; display: block; }
 
         /* 清單項目 */
-        .food-item { border-bottom: 1px solid #eee; padding: 20px 0; position: relative; }
-        .tag { background: #e67e22; color: white; padding: 3px 12px; border-radius: 20px; font-size: 11px; margin-left: 5px; }
-        .star-display { color: #f1c40f; font-size: 18px; margin: 5px 0; display: inline-block; }
-        .score-note { font-size: 13px; color: #8d6e63; margin-left: 8px; font-weight: bold; }
-        .food-pic { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-top: 10px; }
+        .food-item { border-bottom: 1px solid #eee; padding: 15px 0; position: relative; cursor: pointer; }
+        .food-item:last-child { border-bottom: none; }
+        .tag { background: #e67e22; color: white; padding: 3px 10px; border-radius: 20px; font-size: 11px; margin-left: 5px; }
+        .star-display { color: #f1c40f; font-size: 18px; margin: 5px 0; }
+        
+        /* 隱藏詳情區 */
+        .details { display: none; background: #fffdfa; padding: 10px; border-radius: 10px; margin-top: 10px; border: 1px dashed #ffd8b1; }
+        .details.show { display: block; }
+        .detail-score { font-size: 13px; color: #666; margin: 3px 0; }
+        .note-text { font-size: 14px; color: #444; background: #eee; padding: 8px; border-radius: 8px; margin-top: 8px; white-space: pre-wrap; }
         
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .edit-btn { background-color: #3498db; padding: 8px; font-size: 13px; }
@@ -39,14 +46,13 @@
     </div>
 
     <div class="card" style="background-color: #eafaf1;">
-        <strong style="font-size: 0.9rem; color: #27ae60;">✨ 指定類別抽籤：</strong>
-        <select id="pickType" style="margin-bottom: 10px; border-color: #27ae60;">
-            <option value="全部">全部隨機</option>
+        <select id="pickType" style="margin-bottom: 10px;">
+            <option value="全部">全部類別隨機</option>
             <option value="早午餐">🍳 只抽早午餐</option>
             <option value="午晚餐">🍱 只抽午晚餐</option>
             <option value="甜點點心">🍰 只抽甜點點心</option>
         </select>
-        <button style="background-color: #27ae60; margin: 0;" onclick="pickRandom()">開始抽籤</button>
+        <button style="background-color: #27ae60; margin: 0;" onclick="pickRandom()">幫我決定吃什麼</button>
         <div id="randomDisplay" style="margin-top:12px; font-weight:bold; color: #1e8449; text-align: center;"></div>
     </div>
 
@@ -60,9 +66,10 @@
             <option value="甜點點心">🍰 甜點點心</option>
         </select>
 
-        <label>評分 (1-7 顆星)：</label>
+        <label>細項評分 (1-7 顆星)：</label>
         <div class="rating-box">
-            <div class="star-rating">
+            <span class="rating-title">總評分</span>
+            <div class="star-rating" id="r_total_group">
                 <input type="radio" name="rt" id="rt7" value="7"><label for="rt7">★</label>
                 <input type="radio" name="rt" id="rt6" value="6"><label for="rt6">★</label>
                 <input type="radio" name="rt" id="rt5" value="5"><label for="rt5">★</label>
@@ -72,13 +79,48 @@
                 <input type="radio" name="rt" id="rt1" value="1"><label for="rt1">★</label>
             </div>
         </div>
+        <div class="rating-box">
+            <span class="rating-title">口味</span>
+            <div class="star-rating" id="r_taste_group">
+                <input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label>
+                <input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label>
+                <input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label>
+                <input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label>
+                <input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label>
+                <input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label>
+                <input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label>
+            </div>
+        </div>
+        <div class="rating-box">
+            <span class="rating-title">服務</span>
+            <div class="star-rating" id="r_service_group">
+                <input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label>
+                <input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label>
+                <input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label>
+                <input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label>
+                <input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label>
+                <input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label>
+                <input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label>
+            </div>
+        </div>
+        <div class="rating-box">
+            <span class="rating-title">價格</span>
+            <div class="star-rating" id="r_price_group">
+                <input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label>
+                <input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label>
+                <input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label>
+                <input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label>
+                <input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label>
+                <input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label>
+                <input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label>
+            </div>
+        </div>
 
         <input type="text" id="url" placeholder="📍 Google Maps 連結">
-        <label>📸 照片：</label>
-        <input type="file" id="photoInput" accept="image/*">
+        <textarea id="note" placeholder="✏️ 寫下你的用餐心得或必點菜色..."></textarea>
         
-        <button id="saveBtn" onclick="saveFood()">儲存到口袋名單</button>
-        <button id="cancelBtn" style="display:none; background-color:#95a5a6; margin-top:5px;" onclick="resetForm()">取消編輯</button>
+        <button id="saveBtn" onclick="saveFood()">儲存美食紀錄</button>
+        <button id="cancelBtn" style="display:none; background-color:#95a5a6; margin-top:5px;" onclick="resetForm()">取消</button>
     </div>
 
     <div class="card" id="list">
@@ -86,12 +128,11 @@
     </div>
 
     <script>
-        let foods = JSON.parse(localStorage.getItem('food_v4')) || [];
-        const scoreNotes = { 1:"極差", 2:"失望", 3:"普通", 4:"還不錯", 5:"推薦", 6:"超讚", 7:"神店必吃" };
+        let foods = JSON.parse(localStorage.getItem('food_v5')) || [];
         render();
 
-        function getStarVal() {
-            const el = document.getElementsByName('rt');
+        function getStarVal(name) {
+            const el = document.getElementsByName(name);
             for (let i of el) { if (i.checked) return parseInt(i.value); }
             return 4;
         }
@@ -99,28 +140,18 @@
         function saveFood() {
             const name = document.getElementById('name').value;
             const editId = document.getElementById('editId').value;
-            const file = document.getElementById('photoInput').files[0];
             if(!name) return alert("請輸入店名");
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) { doSave(e.target.result, editId); };
-                reader.readAsDataURL(file);
-            } else {
-                // 如果是編輯模式且沒傳新照片，保留舊照片
-                const oldItem = foods.find(f => f.id == editId);
-                doSave(oldItem ? oldItem.photo : null, editId);
-            }
-        }
-
-        function doSave(imgData, editId) {
             const itemData = {
                 id: editId ? parseInt(editId) : Date.now(),
-                name: document.getElementById('name').value,
+                name: name,
                 type: document.getElementById('type').value,
                 url: document.getElementById('url').value,
-                photo: imgData,
-                total: getStarVal()
+                note: document.getElementById('note').value,
+                total: getStarVal('rt'),
+                taste: getStarVal('rk'),
+                service: getStarVal('rs'),
+                price: getStarVal('rp')
             };
 
             if(editId) {
@@ -130,7 +161,7 @@
                 foods.unshift(itemData);
             }
 
-            localStorage.setItem('food_v4', JSON.stringify(foods));
+            localStorage.setItem('food_v5', JSON.stringify(foods));
             resetForm();
             render();
         }
@@ -138,22 +169,35 @@
         function render() {
             const container = document.getElementById('list');
             container.innerHTML = '<h3 style="border-bottom: 2px solid #e67e22; padding-bottom: 10px; margin-top: 0;">📜 我的收藏清單</h3>';
+            
             foods.forEach(f => {
                 const div = document.createElement('div');
                 div.className = 'food-item';
                 div.innerHTML = `
-                    <strong>${f.name}</strong><span class="tag">${f.type}</span><br>
-                    <div class="star-display">${'★'.repeat(f.total)}${'☆'.repeat(7-f.total)}</div>
-                    <span class="score-note">${scoreNotes[f.total]}</span><br>
-                    ${f.url ? `<a href="${f.url}" target="_blank" style="font-size:12px; color:#3498db; text-decoration:none;">📍 查看地圖</a>` : ''}
-                    ${f.photo ? `<img src="${f.photo}" class="food-pic">` : ''}
-                    <div class="btn-group">
-                        <button class="edit-btn" onclick="editItem(${f.id})">編輯內容</button>
-                        <button class="del-btn" onclick="remove(${f.id})">刪除</button>
+                    <div onclick="toggleDetails(${f.id})">
+                        <strong>${f.name}</strong><span class="tag">${f.type}</span><br>
+                        <div class="star-display">${'★'.repeat(f.total)}${'☆'.repeat(7-f.total)}</div>
+                    </div>
+                    
+                    <div id="details-${f.id}" class="details">
+                        <div class="detail-score">😋 口味：${'★'.repeat(f.taste)}${'☆'.repeat(7-f.taste)}</div>
+                        <div class="detail-score">🤵 服務：${'★'.repeat(f.service)}${'☆'.repeat(7-f.service)}</div>
+                        <div class="detail-score">💰 價格：${'★'.repeat(f.price)}${'☆'.repeat(7-f.price)}</div>
+                        ${f.url ? `<a href="${f.url}" target="_blank" style="display:block; margin:8px 0; font-size:13px; color:#3498db; text-decoration:none;">📍 開啟 Google Maps</a>` : ''}
+                        ${f.note ? `<div class="note-text">${f.note}</div>` : ''}
+                        
+                        <div class="btn-group">
+                            <button class="edit-btn" onclick="editItem(${f.id})">編輯內容</button>
+                            <button class="del-btn" onclick="remove(${f.id})">刪除</button>
+                        </div>
                     </div>
                 `;
                 container.appendChild(div);
             });
+        }
+
+        function toggleDetails(id) {
+            document.getElementById(`details-${id}`).classList.toggle('show');
         }
 
         function editItem(id) {
@@ -162,9 +206,15 @@
             document.getElementById('name').value = item.name;
             document.getElementById('type').value = item.type;
             document.getElementById('url').value = item.url;
-            document.getElementById('rt' + item.total).checked = true;
+            document.getElementById('note').value = item.note || '';
             
-            document.getElementById('formTitle').innerText = "✏️ 正在編輯：" + item.name;
+            // 設定四組評分的星星
+            document.getElementById(`rt${item.total}`).checked = true;
+            document.getElementById(`rk${item.taste}`).checked = true;
+            document.getElementById(`rs${item.service}`).checked = true;
+            document.getElementById(`rp${item.price}`).checked = true;
+            
+            document.getElementById('formTitle').innerText = "✏️ 編輯餐廳";
             document.getElementById('saveBtn').innerText = "儲存修改";
             document.getElementById('cancelBtn').style.display = "block";
             window.scrollTo(0, 0);
@@ -174,10 +224,12 @@
             document.getElementById('editId').value = '';
             document.getElementById('name').value = '';
             document.getElementById('url').value = '';
-            document.getElementById('photoInput').value = '';
-            document.getElementById('rt4').checked = true;
+            document.getElementById('note').value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(r => {
+                if(r.id.includes('4')) r.checked = true;
+            });
             document.getElementById('formTitle').innerText = "✍️ 紀錄新餐廳";
-            document.getElementById('saveBtn').innerText = "儲存到口袋名單";
+            document.getElementById('saveBtn').innerText = "儲存美食紀錄";
             document.getElementById('cancelBtn').style.display = "none";
         }
 
@@ -185,15 +237,16 @@
             const filterType = document.getElementById('pickType').value;
             let list = (filterType === "全部") ? foods : foods.filter(f => f.type === filterType);
             
-            if(list.length === 0) return alert("該類別沒有餐廳紀錄喔！");
+            if(list.length === 0) return alert("此類別目前沒有紀錄喔！");
             const picked = list[Math.floor(Math.random() * list.length)];
             document.getElementById('randomDisplay').innerHTML = `💡 建議吃：<span style="color:#e67e22;">${picked.name}</span>`;
         }
 
         function remove(id) {
-            if(confirm("確定刪除？")) {
+            event.stopPropagation(); // 防止觸發展開事件
+            if(confirm("確定刪除這筆紀錄嗎？")) {
                 foods = foods.filter(f => f.id !== id);
-                localStorage.setItem('food_v4', JSON.stringify(foods));
+                localStorage.setItem('food_v5', JSON.stringify(foods));
                 render();
             }
         }
