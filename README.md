@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Foodie Pocket</title>
     <style>
-        /* 這裡稍微優化了視覺，讓標題更乾淨 */
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; }
         .header { background-color: white; padding: 20px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .header h2 { margin: 0; color: #e67e22; font-size: 1.5rem; }
@@ -60,6 +59,7 @@
     </div>
 
     <script>
+        // 資料與之前的版本通用，不用擔心資料消失
         let foods = JSON.parse(localStorage.getItem('food_v2')) || [];
         render();
 
@@ -126,7 +126,7 @@
         }
 
         function pickRandom() {
-            if(foods.length === 0) return alert("清單是空的，快去吃好料來紀錄！");
+            if(foods.length === 0) return alert("清單是空的！");
             const picked = foods[Math.floor(Math.random() * foods.length)];
             document.getElementById('randomDisplay').innerHTML = `💡 建議吃：<span style="font-size:1.2rem; color:#e67e22;">${picked.name}</span><br>(評分：${picked.scores.total})`;
         }
