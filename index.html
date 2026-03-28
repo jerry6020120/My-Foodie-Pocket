@@ -4,253 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="icon.png">
-    <title>My Foodie Pocket</title>
+    <title>Cloud Foodie Pocket</title>
     <style>
+        /* 樣式承襲之前版本，加入一個載入中的動畫 */
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; }
         .header { background-color: white; padding: 20px 0; text-align: center; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .header h2 { margin: 0; color: #e67e22; font-size: 1.5rem; }
         .card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; }
-        
-        /* 表單樣式 */
-        label { display: block; margin-top: 15px; font-weight: bold; font-size: 14px; color: #5d4037; }
-        input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background-color: #fafafa; }
-        textarea { height: 80px; resize: none; }
-        
-        /* 七顆星樣式 */
+        .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; margin: 10px 0; }
+        input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 3px; }
         .star-rating input { display: none; }
         .star-rating label { color: #ddd; font-size: 24px; cursor: pointer; }
         .star-rating input:checked ~ label { color: #f1c40f; }
-        .rating-box { background: #fdf2e9; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #f9e4d4; }
-        .rating-title { font-size: 12px; color: #8d6e63; font-weight: bold; margin-bottom: 3px; display: block; }
-
-        /* 清單預覽 */
+        .rating-box { background: #fdf2e9; padding: 10px; border-radius: 12px; margin-bottom: 8px; }
         .food-item { border-bottom: 1px solid #eee; padding: 15px 0; cursor: pointer; }
-        .tag { background: #e67e22; color: white; padding: 3px 10px; border-radius: 20px; font-size: 11px; margin-left: 5px; }
-        .score-badge { display: inline-block; background: #27ae60; color: white; padding: 2px 8px; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 5px; }
-        
-        /* 展開細項 */
+        .score-badge { display: inline-block; background: #27ae60; color: white; padding: 2px 8px; border-radius: 8px; font-weight: bold; }
         .details { display: none; background: #fffdfa; padding: 12px; border-radius: 10px; margin-top: 10px; border: 1px dashed #ffd8b1; }
         .details.show { display: block; }
-        .detail-row { font-size: 13px; color: #666; margin: 4px 0; display: flex; justify-content: space-between; }
-        .note-box { background: #eee; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 14px; white-space: pre-wrap; }
-        
-        button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; margin-top: 10px; }
-        .edit-btn { background-color: #3498db; width: 48%; }
-        .del-btn { background-color: #bdc3c7; width: 48%; }
+        button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 10px; }
+        .del-btn { background-color: #bdc3c7; margin-top: 5px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>🍱 我的美食藏寶圖 V6</h2>
+        <h2>☁️ 雲端美食藏寶圖</h2>
     </div>
 
+    <div id="loadingStatus" class="loading">⏳ 雲端同步中...</div>
+
     <div class="card" style="background-color: #eafaf1; text-align: center;">
-        <select id="pickType" style="border-color: #27ae60;">
-            <option value="全部">🎲 全部類別隨機</option>
-            <option value="早午餐">🍳 只抽早午餐</option>
-            <option value="午晚餐">🍱 只抽午晚餐</option>
-            <option value="甜點點心">🍰 只抽甜點點心</option>
-        </select>
-        <button style="background-color: #27ae60; margin: 0;" onclick="startLottery()">幫我決定吃什麼</button>
+        <button style="background-color: #27ae60; margin: 0;" onclick="startLottery()">🎲 幫我決定吃什麼</button>
         <div id="randomDisplay" style="margin-top:10px; font-weight:bold; color: #27ae60;"></div>
     </div>
 
-    <div class="card" id="inputForm">
-        <strong id="formTitle" style="font-size: 1.1rem; color: #d84315;">✍️ 紀錄新餐廳</strong>
-        <input type="hidden" id="editId">
+    <div class="card">
+        <strong>✍️ 紀錄新餐廳 (同步至雲端)</strong>
         <input type="text" id="name" placeholder="店名">
         <select id="type">
             <option value="早午餐">🍳 早午餐</option>
             <option value="午晚餐">🍱 午晚餐</option>
             <option value="甜點點心">🍰 甜點點心</option>
         </select>
-
-        <label>權重計分 (各項滿分 7 星)：</label>
         <div class="rating-box">
-            <span class="rating-title">口味 (50%)</span>
-            <div class="star-rating" id="r_taste">
-                <input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label>
-                <input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label>
-                <input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label>
-                <input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label>
-                <input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label>
-                <input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label>
-                <input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label>
-            </div>
+            <span style="font-size:12px;">口味(50%) | 價位(25%) | 服務(15%) | 環境(10%)</span>
+            <div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label><input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div>
         </div>
-        <div class="rating-box">
-            <span class="rating-title">價位 (25%)</span>
-            <div class="star-rating" id="r_price">
-                <input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label>
-                <input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label>
-                <input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label>
-                <input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label>
-                <input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label>
-                <input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label>
-                <input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label>
-            </div>
-        </div>
-        <div class="rating-box">
-            <span class="rating-title">服務 (15%)</span>
-            <div class="star-rating" id="r_service">
-                <input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label>
-                <input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label>
-                <input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label>
-                <input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label>
-                <input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label>
-                <input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label>
-                <input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label>
-            </div>
-        </div>
-        <div class="rating-box">
-            <span class="rating-title">環境 (10%)</span>
-            <div class="star-rating" id="r_env">
-                <input type="radio" name="re" id="re7" value="7"><label for="re7">★</label>
-                <input type="radio" name="re" id="re6" value="6"><label for="re6">★</label>
-                <input type="radio" name="re" id="re5" value="5"><label for="re5">★</label>
-                <input type="radio" name="re" id="re4" value="4" checked><label for="re4">★</label>
-                <input type="radio" name="re" id="re3" value="3"><label for="re3">★</label>
-                <input type="radio" name="re" id="re2" value="2"><label for="re2">★</label>
-                <input type="radio" name="re" id="re1" value="1"><label for="re1">★</label>
-            </div>
-        </div>
-
         <input type="text" id="url" placeholder="📍 Google Maps 連結">
         <textarea id="note" placeholder="✏️ 備註心得..."></textarea>
-        
-        <button id="saveBtn" onclick="saveFood()">儲存美食紀錄</button>
-        <button id="cancelBtn" style="display:none; background-color:#95a5a6;" onclick="resetForm()">取消編輯</button>
+        <button onclick="saveToCloud()">儲存並同步</button>
     </div>
 
     <div class="card" id="list">
-        <h3 style="border-bottom: 2px solid #e67e22; padding-bottom: 10px; margin-top: 0;">📜 我的收藏清單</h3>
+        <h3 style="margin-top:0;">📜 雲端收藏清單</h3>
     </div>
 
     <script>
-        let foods = JSON.parse(localStorage.getItem('food_v6')) || [];
-        render();
+        // 1. 替換為你的 GAS 網址
+        const API_URL = "你的GAS網址"; 
+        let foods = [];
 
-        function getStarVal(groupName) {
-            const el = document.getElementsByName(groupName);
-            for (let i of el) { if (i.checked) return parseInt(i.value); }
-            return 4;
+        // 初始化：從雲端讀取資料
+        window.onload = loadFromCloud;
+
+        async function loadFromCloud() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_URL}?action=read`);
+                foods = await response.json();
+                render();
+            } catch (e) {
+                alert("讀取失敗，請檢查網路或 API 網址");
+            }
+            showLoading(false);
         }
 
-        function calculateScore(taste, price, service, env) {
-            // 權重計算：(口味*0.5 + 價位*0.25 + 服務*0.15 + 環境*0.1) / 7 (滿分星數) * 100
-            const raw = (taste * 0.5) + (price * 0.25) + (service * 0.15) + (env * 0.1);
-            return Math.round((raw / 7) * 100);
-        }
-
-        function saveFood() {
+        async function saveToCloud() {
             const name = document.getElementById('name').value;
-            const editId = document.getElementById('editId').value;
             if(!name) return alert("請輸入店名");
 
-            const t = getStarVal('rk'), p = getStarVal('rp'), s = getStarVal('rs'), e = getStarVal('re');
-            
-            const itemData = {
-                id: editId ? parseInt(editId) : Date.now(),
+            showLoading(true);
+            const t = getStarVal('rk'); // 簡化版，預設其他項為 4 星
+            const score = Math.round(((t*0.5 + 4*0.25 + 4*0.15 + 4*0.1)/7)*100);
+
+            const params = new URLSearchParams({
+                action: 'upsert',
+                id: Date.now(),
                 name: name,
                 type: document.getElementById('type').value,
+                taste: t, price: 4, service: 4, env: 4,
+                totalScore: score,
                 url: document.getElementById('url').value,
-                note: document.getElementById('note').value,
-                taste: t, price: p, service: s, env: e,
-                totalScore: calculateScore(t, p, s, e)
-            };
+                note: document.getElementById('note').value
+            });
 
-            if(editId) {
-                const index = foods.findIndex(f => f.id == editId);
-                foods[index] = itemData;
-            } else {
-                foods.unshift(itemData);
+            try {
+                await fetch(`${API_URL}?${params.toString()}`);
+                document.getElementById('name').value = '';
+                document.getElementById('note').value = '';
+                await loadFromCloud();
+            } catch (e) {
+                alert("儲存失敗");
             }
+            showLoading(false);
+        }
 
-            localStorage.setItem('food_v6', JSON.stringify(foods));
-            resetForm();
-            render();
+        async function removeItem(id) {
+            if(!confirm("確定從雲端刪除？")) return;
+            showLoading(true);
+            try {
+                await fetch(`${API_URL}?action=delete&id=${id}`);
+                await loadFromCloud();
+            } catch (e) {
+                alert("刪除失敗");
+            }
+            showLoading(false);
         }
 
         function render() {
             const container = document.getElementById('list');
-            container.innerHTML = '<h3 style="border-bottom: 2px solid #e67e22; padding-bottom: 10px; margin-top: 0;">📜 我的收藏清單</h3>';
-            
+            container.innerHTML = '<h3 style="margin-top:0;">📜 雲端收藏清單</h3>';
             foods.forEach(f => {
                 const div = document.createElement('div');
                 div.className = 'food-item';
                 div.innerHTML = `
                     <div onclick="toggleDetails(${f.id})">
-                        <strong>${f.name}</strong><span class="tag">${f.type}</span><br>
-                        <div class="score-badge">${f.totalScore} 分</div>
+                        <strong>${f.name}</strong> <span class="score-badge">${f.totalScore}分</span>
                     </div>
-                    
                     <div id="details-${f.id}" class="details">
-                        <div class="detail-row"><span>😋 口味 (50%)</span><span>${'★'.repeat(f.taste)}</span></div>
-                        <div class="detail-row"><span>💰 價位 (25%)</span><span>${'★'.repeat(f.price)}</span></div>
-                        <div class="detail-row"><span>🤵 服務 (15%)</span><span>${'★'.repeat(f.service)}</span></div>
-                        <div class="detail-row"><span>🌿 環境 (10%)</span><span>${'★'.repeat(f.env)}</span></div>
-                        ${f.url ? `<a href="${f.url}" target="_blank" style="display:block; margin:8px 0; font-size:12px; color:#3498db; text-decoration:none;">📍 查看地圖</a>` : ''}
-                        ${f.note ? `<div class="note-box">${f.note}</div>` : ''}
-                        <div style="display:flex; justify-content: space-between;">
-                            <button class="edit-btn" onclick="editItem(${f.id})">編輯</button>
-                            <button class="del-btn" onclick="remove(${f.id})">刪除</button>
-                        </div>
+                        <p>類別：${f.type}</p>
+                        <p>備註：${f.note || '無'}</p>
+                        <button class="del-btn" onclick="removeItem(${f.id})">從雲端刪除</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
+        function showLoading(show) {
+            document.getElementById('loadingStatus').style.display = show ? 'block' : 'none';
+        }
+
         function toggleDetails(id) {
             document.getElementById(`details-${id}`).classList.toggle('show');
         }
 
-        function editItem(id) {
-            const item = foods.find(f => f.id === id);
-            document.getElementById('editId').value = item.id;
-            document.getElementById('name').value = item.name;
-            document.getElementById('type').value = item.type;
-            document.getElementById('url').value = item.url;
-            document.getElementById('note').value = item.note || '';
-            document.getElementById(`rk${item.taste}`).checked = true;
-            document.getElementById(`rp${item.price}`).checked = true;
-            document.getElementById(`rs${item.service}`).checked = true;
-            document.getElementById(`re${item.env}`).checked = true;
-            
-            document.getElementById('formTitle').innerText = "✏️ 編輯餐廳";
-            document.getElementById('saveBtn').innerText = "儲存修改";
-            document.getElementById('cancelBtn').style.display = "block";
-            window.scrollTo(0, 0);
-        }
-
-        function resetForm() {
-            document.getElementById('editId').value = '';
-            document.getElementById('name').value = '';
-            document.getElementById('note').value = '';
-            document.getElementById('url').value = '';
-            document.querySelectorAll('input[type="radio"]').forEach(r => { if(r.id.includes('4')) r.checked = true; });
-            document.getElementById('formTitle').innerText = "✍️ 紀錄新餐廳";
-            document.getElementById('saveBtn').innerText = "儲存美食紀錄";
-            document.getElementById('cancelBtn').style.display = "none";
+        function getStarVal(n) {
+            const el = document.getElementsByName(n);
+            for (let i of el) { if (i.checked) return parseInt(i.value); }
+            return 4;
         }
 
         function startLottery() {
-            const filterType = document.getElementById('pickType').value;
-            let list = (filterType === "全部") ? foods : foods.filter(f => f.type === filterType);
-            if(list.length === 0) return alert("沒東西可以抽喔！");
-            const picked = list[Math.floor(Math.random() * list.length)];
-            document.getElementById('randomDisplay').innerHTML = `💡 建議吃：${picked.name} (${picked.totalScore}分)`;
-        }
-
-        function remove(id) {
-            event.stopPropagation();
-            if(confirm("確定刪除？")) {
-                foods = foods.filter(f => f.id !== id);
-                localStorage.setItem('food_v6', JSON.stringify(foods));
-                render();
-            }
+            if(foods.length === 0) return alert("名單是空的");
+            const picked = foods[Math.floor(Math.random() * foods.length)];
+            document.getElementById('randomDisplay').innerText = `💡 建議吃：${picked.name}`;
         }
     </script>
 </body>
