@@ -6,207 +6,161 @@
     <link rel="apple-touch-icon" href="icon.png">
     <title>Cloud Foodie Pocket</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; }
-        .header { background-color: white; padding: 20px 0; text-align: center; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; padding-bottom: 50px; }
+        .header { background-color: white; padding: 15px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 15px; }
         .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; padding: 10px; }
-        input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
         
-        /* 七顆星樣式 */
-        .star-group { margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-radius: 12px; }
-        .star-label { font-size: 13px; color: #8d6e63; font-weight: bold; margin-bottom: 5px; display: block; }
-        .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 3px; }
+        /* 評分樣式 */
+        .star-group { margin-bottom: 10px; background: #fdf2e9; padding: 10px; border-radius: 12px; }
+        .star-label { font-size: 12px; color: #8d6e63; font-weight: bold; }
+        .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
         .star-rating input { display: none; }
-        .star-rating label { color: #ddd; font-size: 24px; cursor: pointer; }
+        .star-rating label { color: #ddd; font-size: 22px; cursor: pointer; padding: 0 2px; }
         .star-rating input:checked ~ label { color: #f1c40f; }
 
-        .food-item { border-bottom: 1px solid #eee; padding: 15px 0; cursor: pointer; }
-        .score-badge { display: inline-block; background: #27ae60; color: white; padding: 2px 8px; border-radius: 8px; font-weight: bold; }
-        .details { display: none; background: #fffdfa; padding: 12px; border-radius: 10px; margin-top: 10px; border: 1px dashed #ffd8b1; font-size: 14px; }
+        /* 清單顯示 */
+        .food-item { border-bottom: 1px solid #eee; padding: 12px 0; cursor: pointer; }
+        .score-badge { float: right; background: #27ae60; color: white; padding: 2px 8px; border-radius: 8px; font-size: 14px; }
+        .type-tag { font-size: 12px; background: #ebf5fb; color: #2980b9; padding: 2px 6px; border-radius: 4px; margin-right: 5px; }
+        .user-tag { font-size: 11px; color: #95a5a6; }
+        
+        .details { display: none; background: #fffdfa; padding: 12px; border-radius: 10px; margin-top: 10px; border: 1px dashed #ffd8b1; }
         .details.show { display: block; }
+        
         button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 10px; }
-        .del-btn { background-color: #bdc3c7; }
+        .btn-lottery { background-color: #27ae60; margin-bottom: 10px; }
+        .btn-setup { background-color: #95a5a6; font-size: 12px; padding: 8px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>☁️ 雲端美食藏寶圖 V7.1</h2>
+        <h2>☁️ 雲端美食藏寶圖 V7.2</h2>
+        <div id="userDisplay" style="font-size: 12px; color: #e67e22;"></div>
     </div>
 
-    <div id="loadingStatus" class="loading">⏳ 同步中，請稍候...</div>
+    <div id="loadingStatus" class="loading">⏳ 雲端同步中...</div>
+
+    <div class="card" style="text-align: center; border: 2px solid #27ae60;">
+        <button class="btn-lottery" onclick="startLottery()">🎲 抽籤！今天吃什麼？</button>
+        <div id="randomResult" style="font-size: 18px; font-weight: bold; color: #27ae60; min-height: 24px;"></div>
+    </div>
 
     <div class="card">
         <strong>✍️ 紀錄新餐廳</strong>
         <input type="text" id="name" placeholder="店名">
         <select id="type">
-            <option value="早午餐">🍳 早午餐</option>
-            <option value="午晚餐">🍱 午晚餐</option>
-            <option value="甜點點心">🍰 甜點點心</option>
+            <option value="🍳 早午餐">早午餐</option>
+            <option value="🍱 午晚餐">午晚餐</option>
+            <option value="🍰 甜點點心">甜點點心</option>
         </select>
 
         <div class="star-group">
             <span class="star-label">😋 口味 (50%)</span>
-            <div class="star-rating" id="r_taste">
-                <input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label>
-                <input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label>
-                <input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label>
-                <input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label>
-                <input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label>
-                <input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label>
-                <input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label>
-            </div>
+            <div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label><input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div>
         </div>
-
-        <div class="star-group">
-            <span class="star-label">💰 價位 (25%)</span>
-            <div class="star-rating" id="r_price">
-                <input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label>
-                <input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label>
-                <input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label>
-                <input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label>
-                <input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label>
-                <input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label>
-                <input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label>
-            </div>
-        </div>
-
-        <div class="star-group">
-            <span class="star-label">🤵 服務 (15%)</span>
-            <div class="star-rating" id="r_service">
-                <input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label>
-                <input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label>
-                <input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label>
-                <input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label>
-                <input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label>
-                <input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label>
-                <input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label>
-            </div>
-        </div>
-
-        <div class="star-group">
-            <span class="star-label">🌿 環境 (10%)</span>
-            <div class="star-rating" id="r_env">
-                <input type="radio" name="re" id="re7" value="7"><label for="re7">★</label>
-                <input type="radio" name="re" id="re6" value="6"><label for="re6">★</label>
-                <input type="radio" name="re" id="re5" value="5"><label for="re5">★</label>
-                <input type="radio" name="re" id="re4" value="4" checked><label for="re4">★</label>
-                <input type="radio" name="re" id="re3" value="3"><label for="re3">★</label>
-                <input type="radio" name="re" id="re2" value="2"><label for="re2">★</label>
-                <input type="radio" name="re" id="re1" value="1"><label for="re1">★</label>
-            </div>
-        </div>
-
         <input type="text" id="url" placeholder="📍 Google Maps 連結">
         <textarea id="note" placeholder="✏️ 備註心得..."></textarea>
-        <button onclick="saveToCloud()">儲存並同步到雲端</button>
+        <button onclick="saveToCloud()">儲存至雲端</button>
     </div>
 
     <div class="card" id="list">
         <h3 style="margin-top:0;">📜 雲端收藏清單</h3>
     </div>
 
-    <script>
-        // 1. 請務必填寫你正確的 GAS 網址
-        const API_URL = "https://script.google.com/macros/s/AKfycbzKG8eraPwYhpHvemIQwjdOezWOCImHjNBsV2mqZz5PXBZXFfx-1Qq3LZ2pUNu-pIU/exec"; 
-        let foods = [];
+    <button class="btn-setup" onclick="setupUser()">⚙️ 設定我的稱呼 (識別手機用)</button>
 
-        window.onload = loadFromCloud;
+    <script>
+        const API_URL = "你的GAS網址"; 
+        let foods = [];
+        let userName = localStorage.getItem('foodie_username') || "未設定";
+
+        window.onload = () => {
+            document.getElementById('userDisplay').innerText = `目前使用者：${userName}`;
+            loadFromCloud();
+        };
+
+        function setupUser() {
+            const name = prompt("請輸入你的稱呼 (例如：Jerry 或 另一半的名字)：");
+            if(name) {
+                localStorage.setItem('foodie_username', name);
+                location.reload();
+            }
+        }
 
         async function loadFromCloud() {
             showLoading(true);
             try {
-                // 加個 cache blocker 避免抓到舊資料
                 const response = await fetch(`${API_URL}?action=read&t=${Date.now()}`);
-                if (!response.ok) throw new Error();
                 foods = await response.json();
                 render();
-            } catch (e) {
-                alert("讀取失敗！請確認：\n1. API 網址是否正確\n2. GAS 部署時是否設為『所有人』");
-            }
+            } catch (e) { alert("讀取失敗"); }
             showLoading(false);
         }
 
         async function saveToCloud() {
             const name = document.getElementById('name').value;
             if(!name) return alert("請輸入店名");
+            if(userName === "未設定") return alert("請先設定稱呼！");
 
             showLoading(true);
-            const t = getStarVal('rk'), p = getStarVal('rp'), s = getStarVal('rs'), e = getStarVal('re');
-            const score = Math.round(((t*0.5 + p*0.25 + s*0.15 + e*0.1)/7)*100);
+            const t = getStarVal('rk'); 
+            const score = Math.round(((t*0.5 + 4*0.25 + 4*0.15 + 4*0.1)/7)*100);
 
             const params = new URLSearchParams({
                 action: 'upsert',
                 id: Date.now(),
                 name: name,
                 type: document.getElementById('type').value,
-                taste: t, price: p, service: s, env: e,
+                taste: t, price: 4, service: 4, env: 4,
                 totalScore: score,
                 url: document.getElementById('url').value,
-                note: document.getElementById('note').value
+                note: `[${userName}] ${document.getElementById('note').value}` // 將名字存在備註開頭
             });
 
-            try {
-                await fetch(`${API_URL}?${params.toString()}`);
-                resetForm();
-                await loadFromCloud();
-            } catch (err) {
-                alert("儲存失敗，請檢查網路連線");
-            }
-            showLoading(false);
-        }
-
-        async function removeItem(id) {
-            if(!confirm("確定從雲端刪除？")) return;
-            showLoading(true);
-            try {
-                await fetch(`${API_URL}?action=delete&id=${id}`);
-                await loadFromCloud();
-            } catch (err) {
-                alert("刪除失敗");
-            }
+            await fetch(`${API_URL}?${params.toString()}`);
+            document.getElementById('name').value = '';
+            document.getElementById('note').value = '';
+            await loadFromCloud();
             showLoading(false);
         }
 
         function render() {
             const container = document.getElementById('list');
             container.innerHTML = '<h3 style="margin-top:0;">📜 雲端收藏清單</h3>';
-            foods.forEach(f => {
+            foods.sort((a,b) => b.id - a.id).forEach(f => {
                 const div = document.createElement('div');
                 div.className = 'food-item';
                 div.innerHTML = `
                     <div onclick="toggleDetails(${f.id})">
-                        <strong>${f.name}</strong> <span class="score-badge">${f.totalScore}分</span>
+                        <span class="score-badge">${f.totalScore}分</span>
+                        <strong>${f.name}</strong><br>
+                        <span class="type-tag">${f.type}</span>
                     </div>
                     <div id="details-${f.id}" class="details">
-                        <p>口味：${'★'.repeat(f.taste)} | 價位：${'★'.repeat(f.price)}</p>
                         <p>備註：${f.note || '無'}</p>
-                        ${f.url ? `<a href="${f.url}" target="_blank">📍 開啟地圖</a>` : ''}
-                        <button class="del-btn" onclick="removeItem(${f.id})">從雲端刪除</button>
+                        ${f.url ? `<a href="${f.url}" target="_blank">📍 地圖導航</a>` : ''}
+                        <button style="background:#bdc3c7; font-size:12px; padding:5px;" onclick="removeItem(${f.id})">刪除此筆</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        function showLoading(show) {
-            document.getElementById('loadingStatus').style.display = show ? 'block' : 'none';
+        function startLottery() {
+            if(foods.length === 0) return alert("清單還沒有資料喔");
+            const picked = foods[Math.floor(Math.random() * foods.length)];
+            document.getElementById('randomResult').innerText = `✨ 抽到了：${picked.name} (${picked.type})`;
         }
 
-        function toggleDetails(id) {
-            document.getElementById(`details-${id}`).classList.toggle('show');
-        }
-
+        function showLoading(show) { document.getElementById('loadingStatus').style.display = show ? 'block' : 'none'; }
+        function toggleDetails(id) { document.getElementById(`details-${id}`).classList.toggle('show'); }
         function getStarVal(n) {
             const el = document.getElementsByName(n);
             for (let i of el) { if (i.checked) return parseInt(i.value); }
             return 4;
-        }
-
-        function resetForm() {
-            document.getElementById('name').value = '';
-            document.getElementById('note').value = '';
-            document.getElementById('url').value = '';
         }
     </script>
 </body>
