@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Foodie Pocket 2026-03-28</title>
+    
+    <link rel="apple-touch-icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
+    <link rel="icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
+    
+    <title>美食口袋名單 V7.2</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; padding-bottom: 60px; }
         .header { background-color: white; padding: 15px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -41,7 +45,7 @@
 
     <div class="card" style="text-align: center; background-color: #f4fef8;">
         <button class="btn-lottery" onclick="startLottery()">🎲 幫我決定吃什麼？</button>
-        <div id="randomResult" style="margin-top:12px; font-size: 18px; font-weight: bold; color: #27ae60;"></div>
+        <div id="randomResult" style="margin-top:12px; font-size: 18px; font-weight: bold; color: #27ae60; min-height: 24px;"></div>
     </div>
 
     <div class="card">
@@ -53,57 +57,10 @@
             <option value="🍰 甜點點心">🍰 甜點點心</option>
         </select>
 
-        <div class="star-group">
-            <span class="star-label">😋 口味 (50%)</span>
-            <div class="star-rating">
-                <input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label>
-                <input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label>
-                <input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label>
-                <input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label>
-                <input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label>
-                <input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label>
-                <input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label>
-            </div>
-        </div>
-
-        <div class="star-group">
-            <span class="star-label">💰 價位 (25%)</span>
-            <div class="star-rating">
-                <input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label>
-                <input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label>
-                <input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label>
-                <input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label>
-                <input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label>
-                <input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label>
-                <input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label>
-            </div>
-        </div>
-
-        <div class="star-group">
-            <span class="star-label">🤵 服務 (15%)</span>
-            <div class="star-rating">
-                <input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label>
-                <input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label>
-                <input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label>
-                <input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label>
-                <input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label>
-                <input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label>
-                <input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label>
-            </div>
-        </div>
-
-        <div class="star-group">
-            <span class="star-label">🌿 環境 (10%)</span>
-            <div class="star-rating">
-                <input type="radio" name="re" id="re7" value="7"><label for="re7">★</label>
-                <input type="radio" name="re" id="re6" value="6"><label for="re6">★</label>
-                <input type="radio" name="re" id="re5" value="5"><label for="re5">★</label>
-                <input type="radio" name="re" id="re4" value="4" checked><label for="re4">★</label>
-                <input type="radio" name="re" id="re3" value="3"><label for="re3">★</label>
-                <input type="radio" name="re" id="re2" value="2"><label for="re2">★</label>
-                <input type="radio" name="re" id="re1" value="1"><label for="re1">★</label>
-            </div>
-        </div>
+        <div class="star-group"><span class="star-label">😋 口味 (50%)</span><div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label><input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div></div>
+        <div class="star-group"><span class="star-label">💰 價位 (25%)</span><div class="star-rating"><input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label><input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label><input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label><input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label><input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label><input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label><input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label></div></div>
+        <div class="star-group"><span class="star-label">🤵 服務 (15%)</span><div class="star-rating"><input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label><input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label><input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label><input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label><input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label><input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label><input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label></div></div>
+        <div class="star-group"><span class="star-label">🌿 環境 (10%)</span><div class="star-rating"><input type="radio" name="re" id="re7" value="7"><label for="re7">★</label><input type="radio" name="re" id="re6" value="6"><label for="re6">★</label><input type="radio" name="re" id="re5" value="5"><label for="re5">★</label><input type="radio" name="re" id="re4" value="4" checked><label for="re4">★</label><input type="radio" name="re" id="re3" value="3"><label for="re3">★</label><input type="radio" name="re" id="re2" value="2"><label for="re2">★</label><input type="radio" name="re" id="re1" value="1"><label for="re1">★</label></div></div>
 
         <input type="text" id="url" placeholder="📍 Google Maps 連結">
         <textarea id="note" placeholder="✏️ 心得備註..."></textarea>
@@ -132,7 +89,7 @@
                 const response = await fetch(`${API_URL}?action=read&v=${Date.now()}`);
                 foods = await response.json();
                 render();
-            } catch (e) { alert("讀取失敗"); }
+            } catch (e) { console.log(e); }
             showLoading(false);
         }
 
@@ -171,8 +128,8 @@
                     <div id="details-${f.id}" class="details">
                         <p>😋${'★'.repeat(f.taste)} 💰${'★'.repeat(f.price)} 🤵${'★'.repeat(f.service)} 🌿${'★'.repeat(f.env)}</p>
                         <p>${f.note || '無'}</p>
-                        ${f.url ? `<a href="${f.url}" target="_blank">📍地圖</a>` : ''}
-                        <button class="btn-del" onclick="removeItem(${f.id})">🗑️刪除</button>
+                        ${f.url ? `<a href="${f.url}" target="_blank">📍地圖導航</a>` : ''}
+                        <button class="btn-del" onclick="removeItem(${f.id})">🗑️刪除筆資料</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -180,7 +137,7 @@
         }
 
         function startLottery() {
-            if(foods.length === 0) return;
+            if(foods.length === 0) return alert("清單是空的");
             const picked = foods[Math.floor(Math.random() * foods.length)];
             document.getElementById('randomResult').innerText = `✨：${picked.name}`;
         }
@@ -200,7 +157,7 @@
             document.getElementById('name').value = ''; document.getElementById('note').value = ''; document.getElementById('url').value = '';
         }
         async function removeItem(id) {
-            if(!confirm("刪除？")) return;
+            if(!confirm("確定刪除？")) return;
             showLoading(true);
             await fetch(`${API_URL}?action=delete&id=${id}`);
             await loadFromCloud();
