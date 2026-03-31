@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link rel="apple-touch-icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
     <link rel="icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
-    
-    <title>美食口袋名單 V7.2</title>
+    <title>雲端美食藏寶圖 V8.0</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; padding-bottom: 60px; }
         .header { background-color: white; padding: 15px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -15,6 +13,11 @@
         .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; padding: 10px; border: 1px dashed #e67e22; border-radius: 10px; margin-bottom: 10px; }
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fafafa; }
         
+        /* 分數底色等級 */
+        .rank-high { background-color: #e8f8f5 !important; border-left: 5px solid #27ae60; } /* 綠色 */
+        .rank-mid { background-color: #fef5e7 !important; border-left: 5px solid #e67e22; }  /* 橘色 */
+        .rank-low { background-color: #fdedec !important; border-left: 5px solid #e74c3c; }  /* 紅色 */
+
         .star-group { margin-bottom: 12px; background: #fdf2e9; padding: 10px; border-radius: 12px; border: 1px solid #f9e4d4; }
         .star-label { font-size: 13px; color: #8d6e63; font-weight: bold; display: block; margin-bottom: 5px; }
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
@@ -22,10 +25,10 @@
         .star-rating label { color: #ddd; font-size: 26px; cursor: pointer; padding: 0 3px; }
         .star-rating input:checked ~ label { color: #f1c40f; }
 
-        .food-item { border-bottom: 1px solid #eee; padding: 15px 0; cursor: pointer; }
-        .score-badge { float: right; background: #27ae60; color: white; padding: 3px 10px; border-radius: 8px; font-weight: bold; font-size: 16px; }
-        .type-tag { font-size: 12px; background: #ebf5fb; color: #2980b9; padding: 3px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; }
-        .details { display: none; background: #fffdfa; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px dashed #ffd8b1; font-size: 14px; }
+        .food-item { border-bottom: 1px solid #eee; padding: 12px; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: 0.3s; }
+        .score-badge { float: right; background: #2c3e50; color: white; padding: 3px 10px; border-radius: 8px; font-weight: bold; font-size: 16px; }
+        .type-tag { font-size: 12px; background: rgba(255,255,255,0.6); color: #2980b9; padding: 2px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; border: 1px solid #bdc3c7; }
+        .details { display: none; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px dashed #95a5a6; font-size: 14px; background: white; }
         .details.show { display: block; }
         
         button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }
@@ -37,14 +40,21 @@
 <body>
 
     <div class="header">
-        <h2>🍱 雲端美食藏寶圖</h2>
+        <h2>🍱 雲端美食藏寶圖 V8.0</h2>
         <div id="userDisplay" style="font-size: 13px; color: #d35400; font-weight: bold;"></div>
     </div>
 
     <div id="loadingStatus" class="loading">⏳ 同步雲端中...</div>
 
-    <div class="card" style="text-align: center; background-color: #f4fef8;">
-        <button class="btn-lottery" onclick="startLottery()">🎲 幫我決定吃什麼？</button>
+    <div class="card" style="text-align: center; background-color: #f4fef8; border: 2px solid #27ae60;">
+        <strong style="color: #27ae60;">🎲 今天想吃哪一類？</strong>
+        <select id="lotteryFilter">
+            <option value="全部">✨ 全部類別 (70分以上)</option>
+            <option value="🍳 早午餐">🍳 早午餐</option>
+            <option value="🍱 午晚餐">🍱 午晚餐</option>
+            <option value="🍰 甜點點心">🍰 甜點點心</option>
+        </select>
+        <button class="btn-lottery" onclick="startLottery()">開始抽籤</button>
         <div id="randomResult" style="margin-top:12px; font-size: 18px; font-weight: bold; color: #27ae60; min-height: 24px;"></div>
     </div>
 
@@ -68,7 +78,7 @@
     </div>
 
     <div class="card" id="list">
-        <h3 style="margin-top:0;">📜 雲端美食清單</h3>
+        <h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>
     </div>
 
     <button class="btn-setup" onclick="setupUser()">⚙️ 設定我的稱呼</button>
@@ -79,7 +89,7 @@
         let userName = localStorage.getItem('foodie_username') || "未設定";
 
         window.onload = () => {
-            document.getElementById('userDisplay').innerText = `👤：${userName}`;
+            document.getElementById('userDisplay').innerText = `👤 使用者：${userName}`;
             loadFromCloud();
         };
 
@@ -89,14 +99,14 @@
                 const response = await fetch(`${API_URL}?action=read&v=${Date.now()}`);
                 foods = await response.json();
                 render();
-            } catch (e) { console.log(e); }
+            } catch (e) { alert("同步失敗，請檢查網路"); }
             showLoading(false);
         }
 
         async function saveToCloud() {
             const name = document.getElementById('name').value;
             if(!name) return alert("請輸入店名");
-            if(userName === "未設定") return alert("請先設定稱呼");
+            if(userName === "未設定") return alert("請點擊下方設定稱呼");
 
             showLoading(true);
             const t = getStarVal('rk'), p = getStarVal('rp'), s = getStarVal('rs'), e = getStarVal('re');
@@ -108,42 +118,66 @@
                 url: document.getElementById('url').value, note: `[${userName}] ${document.getElementById('note').value}`
             });
 
-            await fetch(`${API_URL}?${params.toString()}`);
-            resetForm();
-            await loadFromCloud();
+            try {
+                await fetch(`${API_URL}?${params.toString()}`);
+                resetForm();
+                await loadFromCloud();
+            } catch (err) { alert("儲存失敗"); }
             showLoading(false);
         }
 
         function render() {
             const container = document.getElementById('list');
-            container.innerHTML = '<h3 style="margin-top:0;">📜 雲端美食清單</h3>';
+            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>';
+            
             foods.sort((a,b) => b.id - a.id).forEach(f => {
                 const div = document.createElement('div');
-                div.className = 'food-item';
+                
+                // 設定分數級距底色
+                let rankClass = "rank-low";
+                if (f.totalScore >= 80) rankClass = "rank-high";
+                else if (f.totalScore >= 70) rankClass = "rank-mid";
+
+                div.className = `food-item ${rankClass}`;
                 div.innerHTML = `
                     <div onclick="toggleDetails(${f.id})">
                         <span class="score-badge">${f.totalScore}分</span>
-                        <strong>${f.name}</strong><br><span class="type-tag">${f.type}</span>
+                        <strong>${f.name}</strong><br>
+                        <span class="type-tag">${f.type}</span>
                     </div>
                     <div id="details-${f.id}" class="details">
                         <p>😋${'★'.repeat(f.taste)} 💰${'★'.repeat(f.price)} 🤵${'★'.repeat(f.service)} 🌿${'★'.repeat(f.env)}</p>
-                        <p>${f.note || '無'}</p>
-                        ${f.url ? `<a href="${f.url}" target="_blank">📍地圖導航</a>` : ''}
-                        <button class="btn-del" onclick="removeItem(${f.id})">🗑️刪除筆資料</button>
+                        <div style="background:#f9f9f9; padding:8px; border-radius:5px; margin:5px 0;">${f.note || '無備註'}</div>
+                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db; text-decoration:none;">📍導航至店家</a>` : ''}
+                        <br><button class="btn-del" onclick="removeItem(${f.id})">🗑️ 刪除</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
+        // 智慧抽籤邏輯：依類別過濾 + 分數門檻
         function startLottery() {
-            if(foods.length === 0) return alert("清單是空的");
-            const picked = foods[Math.floor(Math.random() * foods.length)];
-            document.getElementById('randomResult').innerText = `✨：${picked.name}`;
+            const filterType = document.getElementById('lotteryFilter').value;
+            
+            // 規則：分數必須 >= 70
+            let candidates = foods.filter(f => f.totalScore >= 70);
+            
+            // 規則：如果不是選擇全部，則過濾類別
+            if (filterType !== "全部") {
+                candidates = candidates.filter(f => f.type === filterType);
+            }
+
+            if(candidates.length === 0) {
+                return alert("找不到符合條件(70分以上)的餐廳，快去多開發新名單吧！");
+            }
+
+            const picked = candidates[Math.floor(Math.random() * candidates.length)];
+            document.getElementById('randomResult').innerHTML = `✨ 推薦吃：<span style="color:#e67e22">${picked.name}</span><br><small>(${picked.totalScore}分 / ${picked.type})</small>`;
         }
 
         function setupUser() {
-            const name = prompt("稱呼：");
+            const name = prompt("請問您的稱呼是？", userName);
             if(name) { localStorage.setItem('foodie_username', name); location.reload(); }
         }
         function showLoading(show) { document.getElementById('loadingStatus').style.display = show ? 'block' : 'none'; }
@@ -155,12 +189,15 @@
         }
         function resetForm() {
             document.getElementById('name').value = ''; document.getElementById('note').value = ''; document.getElementById('url').value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(r => { if(r.value == "4") r.checked = true; });
         }
         async function removeItem(id) {
-            if(!confirm("確定刪除？")) return;
+            if(!confirm("確定從雲端刪除？")) return;
             showLoading(true);
-            await fetch(`${API_URL}?action=delete&id=${id}`);
-            await loadFromCloud();
+            try {
+                await fetch(`${API_URL}?action=delete&id=${id}`);
+                await loadFromCloud();
+            } catch (err) { alert("刪除失敗"); }
             showLoading(false);
         }
     </script>
