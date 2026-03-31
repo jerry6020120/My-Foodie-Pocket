@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
     <link rel="icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
-    <title>美食藏寶圖 V9.0 合體版</title>
+    <title>美食藏寶圖 V9.1 精準合併版</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; padding-bottom: 60px; }
         .header { background-color: white; padding: 15px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -13,7 +13,6 @@
         .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; padding: 10px; border: 1px dashed #e67e22; border-radius: 10px; margin-bottom: 10px; }
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fafafa; }
         
-        /* 分數底色等級 */
         .rank-high { background-color: #27ae60 !important; color: white !important; border-radius: 12px; }
         .rank-mid { background-color: #e67e22 !important; color: white !important; border-radius: 12px; }
         .rank-low { background-color: #e74c3c !important; color: white !important; border-radius: 12px; }
@@ -43,16 +42,16 @@
 <body>
 
     <div class="header">
-        <h2>🍱 美食藏寶圖 V9.0</h2>
+        <h2>🍱 美食藏寶圖 V9.1</h2>
         <div id="userDisplay" style="font-size: 13px; color: #d35400; font-weight: bold;"></div>
     </div>
 
     <div id="loadingStatus" class="loading">⏳ 同步雲端中...</div>
 
     <div class="card" style="text-align: center; background-color: #f4fef8; border: 2px solid #27ae60;">
-        <strong style="color: #27ae60;">🎲 今天想吃哪一類？</strong>
+        <strong style="color: #27ae60;">🎲 隨機推薦 (70分以上)</strong>
         <select id="lotteryFilter">
-            <option value="全部">✨ 全部 (70分以上)</option>
+            <option value="全部">✨ 全部類別</option>
             <option value="🍳 早午餐">🍳 早午餐</option>
             <option value="🍱 午晚餐">🍱 午晚餐</option>
             <option value="🍰 甜點點心">🍰 甜點點心</option>
@@ -64,19 +63,19 @@
     <div class="card" id="formContainer">
         <strong id="formTitle" style="color: #e67e22;">✍️ 紀錄新發現</strong>
         <input type="hidden" id="editId">
-        <input type="text" id="name" placeholder="店名 (相同店名將自動合併評價)">
+        <input type="text" id="name" placeholder="店名">
         <select id="type">
             <option value="🍳 早午餐">🍳 早午餐</option>
             <option value="🍱 午晚餐">🍱 午晚餐</option>
             <option value="🍰 甜點點心">🍰 甜點點心</option>
         </select>
 
-        <div class="star-group"><span class="star-label">😋 口味 (50%)</span><div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5"><label for="rk5" checked>★</label><input type="radio" name="rk" id="rk4" value="4"><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div></div>
+        <div class="star-group"><span class="star-label">😋 口味 (50%)</span><div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5" checked><label for="rk5">★</label><input type="radio" name="rk" id="rk4" value="4"><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div></div>
         <div class="star-group"><span class="star-label">💰 價位 (25%)</span><div class="star-rating"><input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label><input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label><input type="radio" name="rp" id="rp5" value="5" checked><label for="rp5">★</label><input type="radio" name="rp" id="rp4" value="4"><label for="rp4">★</label><input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label><input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label><input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label></div></div>
         <div class="star-group"><span class="star-label">🤵 服務 (15%)</span><div class="star-rating"><input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label><input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label><input type="radio" name="rs" id="rs5" value="5" checked><label for="rs5">★</label><input type="radio" name="rs" id="rs4" value="4"><label for="rs4">★</label><input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label><input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label><input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label></div></div>
         <div class="star-group"><span class="star-label">🌿 環境 (10%)</span><div class="star-rating"><input type="radio" name="re" id="re7" value="7"><label for="re7">★</label><input type="radio" name="re" id="re6" value="6"><label for="re6">★</label><input type="radio" name="re" id="re5" value="5" checked><label for="re5">★</label><input type="radio" name="re" id="re4" value="4"><label for="re4">★</label><input type="radio" name="re" id="re3" value="3"><label for="re3">★</label><input type="radio" name="re" id="re2" value="2"><label for="re2">★</label><input type="radio" name="re" id="re1" value="1"><label for="re1">★</label></div></div>
 
-        <input type="text" id="url" placeholder="📍 Google Maps 連結">
+        <input type="text" id="url" placeholder="📍 Google Maps 連結 (建議填寫以便精準合併)">
         <textarea id="note" placeholder="✏️ 心得備註..."></textarea>
         <button id="saveBtn" onclick="saveToCloud()">🚀 儲存並同步</button>
         <button id="cancelBtn" onclick="resetForm()" style="display:none; background-color:#95a5a6;">取消修改</button>
@@ -110,27 +109,36 @@
             showLoading(false);
         }
 
-        // 合併邏輯：按店名分組
+        // ⭐ 升級版合併邏輯：URL 優先
         function aggregateFoods(data) {
             const groups = {};
             data.forEach(item => {
-                const nameKey = item.name.trim();
-                if (!groups[nameKey]) {
-                    groups[nameKey] = { 
+                // 正規化 URL：移除問號後的參數，確保連結一致
+                let key = "";
+                if (item.url && item.url.trim() !== "") {
+                    key = item.url.split('?')[0].trim().toLowerCase();
+                } else {
+                    key = "NAME_" + item.name.trim().toLowerCase(); // 沒 URL 就用店名
+                }
+
+                if (!groups[key]) {
+                    groups[key] = { 
                         ...item, 
                         count: 1, 
                         allNotes: item.note ? [item.note] : [],
                         allIds: [item.id]
                     };
                 } else {
-                    groups[nameKey].count += 1;
-                    groups[nameKey].taste = (groups[nameKey].taste + item.taste) / 2;
-                    groups[nameKey].price = (groups[nameKey].price + item.price) / 2;
-                    groups[nameKey].service = (groups[nameKey].service + item.service) / 2;
-                    groups[nameKey].env = (groups[nameKey].env + item.env) / 2;
-                    groups[nameKey].totalScore = Math.round((groups[nameKey].totalScore + item.totalScore) / 2);
-                    if (item.note) groups[nameKey].allNotes.push(item.note);
-                    groups[nameKey].allIds.push(item.id);
+                    groups[key].count += 1;
+                    groups[key].taste = (groups[key].taste + item.taste) / 2;
+                    groups[key].price = (groups[key].price + item.price) / 2;
+                    groups[key].service = (groups[key].service + item.service) / 2;
+                    groups[key].env = (groups[key].env + item.env) / 2;
+                    groups[key].totalScore = Math.round((groups[key].totalScore + item.totalScore) / 2);
+                    if (item.note) groups[key].allNotes.push(item.note);
+                    groups[key].allIds.push(item.id);
+                    // 如果這筆有 URL 但原本存的 Key 沒有，則更新它 (雖然以 URL 為 Key 時不會發生，但保留彈性)
+                    if (!groups[key].url) groups[key].url = item.url;
                 }
             });
             return Object.values(groups);
@@ -138,7 +146,8 @@
 
         function render() {
             const container = document.getElementById('list');
-            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>';
+            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單 (精準版)</h3>';
+            
             displayFoods.sort((a,b) => b.id - a.id).forEach(f => {
                 const div = document.createElement('div');
                 let rankClass = f.totalScore >= 80 ? "rank-high" : (f.totalScore >= 70 ? "rank-mid" : "rank-low");
@@ -152,9 +161,9 @@
                         <span class="type-tag">${f.type}</span>
                     </div>
                     <div id="details-${f.id}" class="details">
-                        <p>📊 綜合星等：😋${f.taste.toFixed(1)} 💰${f.price.toFixed(1)} 🤵${f.service.toFixed(1)} 🌿${f.env.toFixed(1)}</p>
+                        <p>📊 綜合評價：😋${f.taste.toFixed(1)} 💰${f.price.toFixed(1)} 🤵${f.service.toFixed(1)} 🌿${f.env.toFixed(1)}</p>
                         <div style="background:#f9f9f9; padding:8px; border-radius:5px; margin:5px 0; color:#444;">${notesHtml || '無備註'}</div>
-                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db;">📍地圖導航</a>` : ''}
+                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db; text-decoration:none;">📍 開啟 Google Maps</a>` : '<span style="color:#999;font-size:12px;">(未提供地點連結)</span>'}
                         <br>
                         <button class="btn-edit" onclick="editItem(${f.id})">✏️ 編輯我的評價</button>
                         <button class="btn-del" onclick="removeItem(${f.id})">🗑️ 刪除</button>
@@ -172,14 +181,12 @@
             showLoading(true);
             const t = getStarVal('rk'), p = getStarVal('rp'), s = getStarVal('rs'), e = getStarVal('re');
             const score = Math.round(((t*0.5 + p*0.25 + s*0.15 + e*0.1)/7)*100);
-            
-            // 編輯時使用舊 ID，新增時產生新 ID
             const currentId = document.getElementById('editId').value || Date.now();
 
             const params = new URLSearchParams({
                 action: 'upsert', id: currentId, name: name, type: document.getElementById('type').value,
                 taste: t, price: p, service: s, env: e, totalScore: score,
-                url: document.getElementById('url').value, 
+                url: document.getElementById('url').value.trim(), 
                 note: `[${userName}] ${document.getElementById('note').value}` 
             });
 
@@ -190,15 +197,13 @@
         }
 
         function editItem(id) {
-            // 從原始資料中找出屬於「目前使用者」的那一筆，避免改到別人的
-            const item = rawFoods.find(f => f.id == id) || rawFoods.find(f => f.name === displayFoods.find(df => df.id == id).name && f.note.includes(userName));
-            if(!item) return alert("找不到您的專屬評分記錄，請直接新增一筆。");
+            const item = rawFoods.find(f => f.id == id) || rawFoods.find(f => (f.url && f.url.split('?')[0] === displayFoods.find(df => df.id == id).url?.split('?')[0]) && f.note.includes(userName));
+            if(!item) return alert("找不到您的評分紀錄。");
 
             document.getElementById('editId').value = item.id;
             document.getElementById('name').value = item.name;
             document.getElementById('type').value = item.type;
             document.getElementById('url').value = item.url || '';
-            // 移除備註中的人名標籤方便編輯
             document.getElementById('note').value = (item.note || '').replace(`[${userName}] `, '');
             
             setStarVal('rk', Math.round(item.taste));
@@ -208,7 +213,7 @@
 
             document.getElementById('formContainer').classList.add('editing-mode');
             document.getElementById('formTitle').innerText = "🔄 正在修改我的評價";
-            document.getElementById('saveBtn').innerText = "✅ 更新我的評價";
+            document.getElementById('saveBtn').innerText = "✅ 更新評價";
             document.getElementById('cancelBtn').style.display = "block";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -233,6 +238,7 @@
             document.getElementById('cancelBtn').style.display = "none";
             document.querySelectorAll('input[type="radio"]').forEach(r => { if(r.value == "5") r.checked = true; });
         }
+
         function setupUser() {
             const name = prompt("稱呼：", userName);
             if(name) { localStorage.setItem('foodie_username', name); location.reload(); }
@@ -249,7 +255,7 @@
             el.forEach(input => { if(input.value == val) input.checked = true; });
         }
         async function removeItem(id) {
-            if(!confirm("確定刪除？這將會從雲端移除此筆記錄。")) return;
+            if(!confirm("確定刪除此筆評分紀錄？")) return;
             showLoading(true);
             await fetch(`${API_URL}?action=delete&id=${id}`);
             await loadFromCloud();
