@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
     <link rel="icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
-    <title>雲端美食藏寶圖 V8.0</title>
+    <title>雲端美食藏寶圖 V8.1</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; padding-bottom: 60px; }
         .header { background-color: white; padding: 15px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -13,10 +13,10 @@
         .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; padding: 10px; border: 1px dashed #e67e22; border-radius: 10px; margin-bottom: 10px; }
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fafafa; }
         
-        /* 分數底色等級 */
-        .rank-high { background-color: #e8f8f5 !important; border-left: 5px solid #27ae60; } /* 綠色 */
-        .rank-mid { background-color: #fef5e7 !important; border-left: 5px solid #e67e22; }  /* 橘色 */
-        .rank-low { background-color: #fdedec !important; border-left: 5px solid #e74c3c; }  /* 紅色 */
+        /* 分數底色等級樣式優化 */
+        .rank-high { background-color: #27ae60 !important; color: white !important; border-radius: 12px; } /* 綠色底 */
+        .rank-mid { background-color: #e67e22 !important; color: white !important; border-radius: 12px; }  /* 橘色底 */
+        .rank-low { background-color: #e74c3c !important; color: white !important; border-radius: 12px; }  /* 紅色底 */
 
         .star-group { margin-bottom: 12px; background: #fdf2e9; padding: 10px; border-radius: 12px; border: 1px solid #f9e4d4; }
         .star-label { font-size: 13px; color: #8d6e63; font-weight: bold; display: block; margin-bottom: 5px; }
@@ -25,10 +25,11 @@
         .star-rating label { color: #ddd; font-size: 26px; cursor: pointer; padding: 0 3px; }
         .star-rating input:checked ~ label { color: #f1c40f; }
 
-        .food-item { border-bottom: 1px solid #eee; padding: 12px; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: 0.3s; }
-        .score-badge { float: right; background: #2c3e50; color: white; padding: 3px 10px; border-radius: 8px; font-weight: bold; font-size: 16px; }
-        .type-tag { font-size: 12px; background: rgba(255,255,255,0.6); color: #2980b9; padding: 2px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; border: 1px solid #bdc3c7; }
-        .details { display: none; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px dashed #95a5a6; font-size: 14px; background: white; }
+        .food-item { padding: 15px; cursor: pointer; margin-bottom: 10px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .score-badge { float: right; background: rgba(255,255,255,0.25); color: white; padding: 3px 10px; border-radius: 20px; font-weight: bold; font-size: 16px; border: 1px solid rgba(255,255,255,0.5); }
+        .type-tag { font-size: 12px; background: rgba(255,255,255,0.2); color: white; padding: 2px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; border: 1px solid rgba(255,255,255,0.4); }
+        
+        .details { display: none; padding: 15px; border-radius: 10px; margin-top: 10px; font-size: 14px; background: white; color: #444; }
         .details.show { display: block; }
         
         button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }
@@ -40,7 +41,7 @@
 <body>
 
     <div class="header">
-        <h2>🍱 雲端美食藏寶圖 V8.0</h2>
+        <h2>🍱 雲端美食藏寶圖 V8.1</h2>
         <div id="userDisplay" style="font-size: 13px; color: #d35400; font-weight: bold;"></div>
     </div>
 
@@ -68,7 +69,7 @@
         </select>
 
         <div class="star-group"><span class="star-label">😋 口味 (50%)</span><div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label><input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div></div>
-        <div class="star-group"><span class="star-label">💰 價位 (25%)</span><div class="star-rating"><input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label><input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label><input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label><input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label><input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label><input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label><input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label></div></div>
+        <div class="star-group"><span class="star-label">💰 價位 (25%)</span><div class="star-rating"><input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label><input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label><input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label><input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label><input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label><input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label><input type="radio" name="rp" id="rp1" value="1"><label for="rk1">★</label></div></div>
         <div class="star-group"><span class="star-label">🤵 服務 (15%)</span><div class="star-rating"><input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label><input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label><input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label><input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label><input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label><input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label><input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label></div></div>
         <div class="star-group"><span class="star-label">🌿 環境 (10%)</span><div class="star-rating"><input type="radio" name="re" id="re7" value="7"><label for="re7">★</label><input type="radio" name="re" id="re6" value="6"><label for="re6">★</label><input type="radio" name="re" id="re5" value="5"><label for="re5">★</label><input type="radio" name="re" id="re4" value="4" checked><label for="re4">★</label><input type="radio" name="re" id="re3" value="3"><label for="re3">★</label><input type="radio" name="re" id="re2" value="2"><label for="re2">★</label><input type="radio" name="re" id="re1" value="1"><label for="re1">★</label></div></div>
 
@@ -78,7 +79,7 @@
     </div>
 
     <div class="card" id="list">
-        <h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>
+        <h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px; color: #444;">📜 雲端美食清單</h3>
     </div>
 
     <button class="btn-setup" onclick="setupUser()">⚙️ 設定我的稱呼</button>
@@ -99,7 +100,7 @@
                 const response = await fetch(`${API_URL}?action=read&v=${Date.now()}`);
                 foods = await response.json();
                 render();
-            } catch (e) { alert("同步失敗，請檢查網路"); }
+            } catch (e) { console.error(e); }
             showLoading(false);
         }
 
@@ -118,22 +119,19 @@
                 url: document.getElementById('url').value, note: `[${userName}] ${document.getElementById('note').value}`
             });
 
-            try {
-                await fetch(`${API_URL}?${params.toString()}`);
-                resetForm();
-                await loadFromCloud();
-            } catch (err) { alert("儲存失敗"); }
+            await fetch(`${API_URL}?${params.toString()}`);
+            resetForm();
+            await loadFromCloud();
             showLoading(false);
         }
 
         function render() {
             const container = document.getElementById('list');
-            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>';
+            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px; color: #444;">📜 雲端美食清單</h3>';
             
             foods.sort((a,b) => b.id - a.id).forEach(f => {
                 const div = document.createElement('div');
                 
-                // 設定分數級距底色
                 let rankClass = "rank-low";
                 if (f.totalScore >= 80) rankClass = "rank-high";
                 else if (f.totalScore >= 70) rankClass = "rank-mid";
@@ -147,33 +145,25 @@
                     </div>
                     <div id="details-${f.id}" class="details">
                         <p>😋${'★'.repeat(f.taste)} 💰${'★'.repeat(f.price)} 🤵${'★'.repeat(f.service)} 🌿${'★'.repeat(f.env)}</p>
-                        <div style="background:#f9f9f9; padding:8px; border-radius:5px; margin:5px 0;">${f.note || '無備註'}</div>
-                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db; text-decoration:none;">📍導航至店家</a>` : ''}
-                        <br><button class="btn-del" onclick="removeItem(${f.id})">🗑️ 刪除</button>
+                        <div style="background:#f9f9f9; padding:8px; border-radius:5px; margin:5px 0; border: 1px solid #ddd;">${f.note || '無備註'}</div>
+                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db; text-decoration:none;">📍開啟地圖</a>` : ''}
+                        <br><button class="btn-del" onclick="removeItem(${f.id})">🗑️ 刪除筆資料</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // 智慧抽籤邏輯：依類別過濾 + 分數門檻
         function startLottery() {
             const filterType = document.getElementById('lotteryFilter').value;
-            
-            // 規則：分數必須 >= 70
             let candidates = foods.filter(f => f.totalScore >= 70);
-            
-            // 規則：如果不是選擇全部，則過濾類別
             if (filterType !== "全部") {
                 candidates = candidates.filter(f => f.type === filterType);
             }
-
-            if(candidates.length === 0) {
-                return alert("找不到符合條件(70分以上)的餐廳，快去多開發新名單吧！");
-            }
+            if(candidates.length === 0) return alert("找不到符合條件的名單");
 
             const picked = candidates[Math.floor(Math.random() * candidates.length)];
-            document.getElementById('randomResult').innerHTML = `✨ 推薦吃：<span style="color:#e67e22">${picked.name}</span><br><small>(${picked.totalScore}分 / ${picked.type})</small>`;
+            document.getElementById('randomResult').innerHTML = `✨ 推薦：<span style="color:#e67e22">${picked.name}</span><br><small>(${picked.totalScore}分)</small>`;
         }
 
         function setupUser() {
@@ -192,12 +182,10 @@
             document.querySelectorAll('input[type="radio"]').forEach(r => { if(r.value == "4") r.checked = true; });
         }
         async function removeItem(id) {
-            if(!confirm("確定從雲端刪除？")) return;
+            if(!confirm("刪除？")) return;
             showLoading(true);
-            try {
-                await fetch(`${API_URL}?action=delete&id=${id}`);
-                await loadFromCloud();
-            } catch (err) { alert("刪除失敗"); }
+            await fetch(`${API_URL}?action=delete&id=${id}`);
+            await loadFromCloud();
             showLoading(false);
         }
     </script>
