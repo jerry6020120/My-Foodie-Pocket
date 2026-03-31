@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
     <link rel="icon" href="https://media.istockphoto.com/id/1158034126/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%84%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%AD%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%81%E0%B8%95%E0%B9%8C%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C.jpg?s=170667a&w=0&k=20&c=JVMGdnQ7zjvlKad4i1cu7LKGoWy7MWZkKyJmEzlrfJg=">
-    <title>雲端美食藏寶圖 V8.1</title>
+    <title>美食藏寶圖 V8.2</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #fff9f0; padding: 15px; margin: 0; color: #444; padding-bottom: 60px; }
         .header { background-color: white; padding: 15px 0; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -13,10 +13,9 @@
         .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; padding: 10px; border: 1px dashed #e67e22; border-radius: 10px; margin-bottom: 10px; }
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fafafa; }
         
-        /* 分數底色等級樣式優化 */
-        .rank-high { background-color: #27ae60 !important; color: white !important; border-radius: 12px; } /* 綠色底 */
-        .rank-mid { background-color: #e67e22 !important; color: white !important; border-radius: 12px; }  /* 橘色底 */
-        .rank-low { background-color: #e74c3c !important; color: white !important; border-radius: 12px; }  /* 紅色底 */
+        .rank-high { background-color: #27ae60 !important; color: white !important; border-radius: 12px; }
+        .rank-mid { background-color: #e67e22 !important; color: white !important; border-radius: 12px; }
+        .rank-low { background-color: #e74c3c !important; color: white !important; border-radius: 12px; }
 
         .star-group { margin-bottom: 12px; background: #fdf2e9; padding: 10px; border-radius: 12px; border: 1px solid #f9e4d4; }
         .star-label { font-size: 13px; color: #8d6e63; font-weight: bold; display: block; margin-bottom: 5px; }
@@ -29,19 +28,23 @@
         .score-badge { float: right; background: rgba(255,255,255,0.25); color: white; padding: 3px 10px; border-radius: 20px; font-weight: bold; font-size: 16px; border: 1px solid rgba(255,255,255,0.5); }
         .type-tag { font-size: 12px; background: rgba(255,255,255,0.2); color: white; padding: 2px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; border: 1px solid rgba(255,255,255,0.4); }
         
-        .details { display: none; padding: 15px; border-radius: 10px; margin-top: 10px; font-size: 14px; background: white; color: #444; }
+        .details { display: none; padding: 15px; border-radius: 10px; margin-top: 10px; font-size: 14px; background: white; color: #444; border: 1px solid #ddd; }
         .details.show { display: block; }
         
         button { width: 100%; padding: 14px; background-color: #e67e22; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }
         .btn-lottery { background-color: #27ae60; border: 2px solid #1e8449; }
-        .btn-del { background-color: #e74c3c; width: auto; padding: 5px 15px; font-size: 12px; margin-top: 15px; }
+        .btn-edit { background-color: #3498db; width: auto; padding: 8px 20px; font-size: 13px; margin-top: 15px; margin-right: 10px; }
+        .btn-del { background-color: #95a5a6; width: auto; padding: 8px 20px; font-size: 13px; margin-top: 15px; }
         .btn-setup { background-color: #95a5a6; font-size: 12px; padding: 8px; margin-top: 20px; }
+        
+        /* 編輯中狀態的標示 */
+        .editing-mode { border: 3px solid #3498db !important; background-color: #ebf5fb !important; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>🍱 雲端美食藏寶圖 V8.1</h2>
+        <h2>🍱 美食藏寶圖 V8.2</h2>
         <div id="userDisplay" style="font-size: 13px; color: #d35400; font-weight: bold;"></div>
     </div>
 
@@ -50,7 +53,7 @@
     <div class="card" style="text-align: center; background-color: #f4fef8; border: 2px solid #27ae60;">
         <strong style="color: #27ae60;">🎲 今天想吃哪一類？</strong>
         <select id="lotteryFilter">
-            <option value="全部">✨ 全部類別 (70分以上)</option>
+            <option value="全部">✨ 全部 (70分以上)</option>
             <option value="🍳 早午餐">🍳 早午餐</option>
             <option value="🍱 午晚餐">🍱 午晚餐</option>
             <option value="🍰 甜點點心">🍰 甜點點心</option>
@@ -59,9 +62,9 @@
         <div id="randomResult" style="margin-top:12px; font-size: 18px; font-weight: bold; color: #27ae60; min-height: 24px;"></div>
     </div>
 
-    <div class="card">
-        <strong style="color: #e67e22;">✍️ 紀錄新發現</strong>
-        <input type="text" id="name" placeholder="店名">
+    <div class="card" id="formContainer">
+        <strong id="formTitle" style="color: #e67e22;">✍️ 紀錄新發現</strong>
+        <input type="hidden" id="editId"> <input type="text" id="name" placeholder="店名">
         <select id="type">
             <option value="🍳 早午餐">🍳 早午餐</option>
             <option value="🍱 午晚餐">🍱 午晚餐</option>
@@ -69,17 +72,18 @@
         </select>
 
         <div class="star-group"><span class="star-label">😋 口味 (50%)</span><div class="star-rating"><input type="radio" name="rk" id="rk7" value="7"><label for="rk7">★</label><input type="radio" name="rk" id="rk6" value="6"><label for="rk6">★</label><input type="radio" name="rk" id="rk5" value="5"><label for="rk5">★</label><input type="radio" name="rk" id="rk4" value="4" checked><label for="rk4">★</label><input type="radio" name="rk" id="rk3" value="3"><label for="rk3">★</label><input type="radio" name="rk" id="rk2" value="2"><label for="rk2">★</label><input type="radio" name="rk" id="rk1" value="1"><label for="rk1">★</label></div></div>
-        <div class="star-group"><span class="star-label">💰 價位 (25%)</span><div class="star-rating"><input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label><input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label><input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label><input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label><input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label><input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label><input type="radio" name="rp" id="rp1" value="1"><label for="rk1">★</label></div></div>
+        <div class="star-group"><span class="star-label">💰 價位 (25%)</span><div class="star-rating"><input type="radio" name="rp" id="rp7" value="7"><label for="rp7">★</label><input type="radio" name="rp" id="rp6" value="6"><label for="rp6">★</label><input type="radio" name="rp" id="rp5" value="5"><label for="rp5">★</label><input type="radio" name="rp" id="rp4" value="4" checked><label for="rp4">★</label><input type="radio" name="rp" id="rp3" value="3"><label for="rp3">★</label><input type="radio" name="rp" id="rp2" value="2"><label for="rp2">★</label><input type="radio" name="rp" id="rp1" value="1"><label for="rp1">★</label></div></div>
         <div class="star-group"><span class="star-label">🤵 服務 (15%)</span><div class="star-rating"><input type="radio" name="rs" id="rs7" value="7"><label for="rs7">★</label><input type="radio" name="rs" id="rs6" value="6"><label for="rs6">★</label><input type="radio" name="rs" id="rs5" value="5"><label for="rs5">★</label><input type="radio" name="rs" id="rs4" value="4" checked><label for="rs4">★</label><input type="radio" name="rs" id="rs3" value="3"><label for="rs3">★</label><input type="radio" name="rs" id="rs2" value="2"><label for="rs2">★</label><input type="radio" name="rs" id="rs1" value="1"><label for="rs1">★</label></div></div>
         <div class="star-group"><span class="star-label">🌿 環境 (10%)</span><div class="star-rating"><input type="radio" name="re" id="re7" value="7"><label for="re7">★</label><input type="radio" name="re" id="re6" value="6"><label for="re6">★</label><input type="radio" name="re" id="re5" value="5"><label for="re5">★</label><input type="radio" name="re" id="re4" value="4" checked><label for="re4">★</label><input type="radio" name="re" id="re3" value="3"><label for="re3">★</label><input type="radio" name="re" id="re2" value="2"><label for="re2">★</label><input type="radio" name="re" id="re1" value="1"><label for="re1">★</label></div></div>
 
         <input type="text" id="url" placeholder="📍 Google Maps 連結">
         <textarea id="note" placeholder="✏️ 心得備註..."></textarea>
-        <button onclick="saveToCloud()">🚀 儲存並同步</button>
+        <button id="saveBtn" onclick="saveToCloud()">🚀 儲存並同步</button>
+        <button id="cancelBtn" onclick="resetForm()" style="display:none; background-color:#95a5a6;">取消修改</button>
     </div>
 
     <div class="card" id="list">
-        <h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px; color: #444;">📜 雲端美食清單</h3>
+        <h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>
     </div>
 
     <button class="btn-setup" onclick="setupUser()">⚙️ 設定我的稱呼</button>
@@ -100,23 +104,26 @@
                 const response = await fetch(`${API_URL}?action=read&v=${Date.now()}`);
                 foods = await response.json();
                 render();
-            } catch (e) { console.error(e); }
+            } catch (e) { alert("讀取失敗"); }
             showLoading(false);
         }
 
         async function saveToCloud() {
             const name = document.getElementById('name').value;
             if(!name) return alert("請輸入店名");
-            if(userName === "未設定") return alert("請點擊下方設定稱呼");
+            if(userName === "未設定") return alert("請先設定稱呼");
 
             showLoading(true);
             const t = getStarVal('rk'), p = getStarVal('rp'), s = getStarVal('rs'), e = getStarVal('re');
             const score = Math.round(((t*0.5 + p*0.25 + s*0.15 + e*0.1)/7)*100);
+            
+            // 如果 editId 有值，代表是修改；沒有值則是新資料
+            const currentId = document.getElementById('editId').value || Date.now();
 
             const params = new URLSearchParams({
-                action: 'upsert', id: Date.now(), name: name, type: document.getElementById('type').value,
+                action: 'upsert', id: currentId, name: name, type: document.getElementById('type').value,
                 taste: t, price: p, service: s, env: e, totalScore: score,
-                url: document.getElementById('url').value, note: `[${userName}] ${document.getElementById('note').value}`
+                url: document.getElementById('url').value, note: document.getElementById('note').value
             });
 
             await fetch(`${API_URL}?${params.toString()}`);
@@ -127,47 +134,80 @@
 
         function render() {
             const container = document.getElementById('list');
-            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px; color: #444;">📜 雲端美食清單</h3>';
-            
+            container.innerHTML = '<h3 style="margin-top:0; border-bottom: 2px solid #e67e22; padding-bottom: 10px;">📜 雲端美食清單</h3>';
             foods.sort((a,b) => b.id - a.id).forEach(f => {
                 const div = document.createElement('div');
-                
-                let rankClass = "rank-low";
-                if (f.totalScore >= 80) rankClass = "rank-high";
-                else if (f.totalScore >= 70) rankClass = "rank-mid";
-
+                let rankClass = f.totalScore >= 80 ? "rank-high" : (f.totalScore >= 70 ? "rank-mid" : "rank-low");
                 div.className = `food-item ${rankClass}`;
                 div.innerHTML = `
                     <div onclick="toggleDetails(${f.id})">
                         <span class="score-badge">${f.totalScore}分</span>
-                        <strong>${f.name}</strong><br>
-                        <span class="type-tag">${f.type}</span>
+                        <strong>${f.name}</strong><br><span class="type-tag">${f.type}</span>
                     </div>
                     <div id="details-${f.id}" class="details">
                         <p>😋${'★'.repeat(f.taste)} 💰${'★'.repeat(f.price)} 🤵${'★'.repeat(f.service)} 🌿${'★'.repeat(f.env)}</p>
-                        <div style="background:#f9f9f9; padding:8px; border-radius:5px; margin:5px 0; border: 1px solid #ddd;">${f.note || '無備註'}</div>
-                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db; text-decoration:none;">📍開啟地圖</a>` : ''}
-                        <br><button class="btn-del" onclick="removeItem(${f.id})">🗑️ 刪除筆資料</button>
+                        <div style="background:#f9f9f9; padding:8px; border-radius:5px; margin:5px 0; border: 1px solid #ddd; color:#444;">${f.note || '無備註'}</div>
+                        ${f.url ? `<a href="${f.url}" target="_blank" style="color:#3498db;">📍開啟地圖</a>` : ''}
+                        <br>
+                        <button class="btn-edit" onclick="editItem(${f.id})">✏️ 編輯內容</button>
+                        <button class="btn-del" onclick="removeItem(${f.id})">🗑️ 刪除</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
+        // 核心功能：編輯模式
+        function editItem(id) {
+            const item = foods.find(f => f.id == id);
+            if(!item) return;
+
+            // 1. 將資料填回輸入框
+            document.getElementById('editId').value = item.id;
+            document.getElementById('name').value = item.name;
+            document.getElementById('type').value = item.type;
+            document.getElementById('url').value = item.url || '';
+            document.getElementById('note').value = item.note || '';
+            
+            // 2. 設定星星評分
+            setStarVal('rk', item.taste);
+            setStarVal('rp', item.price);
+            setStarVal('rs', item.service);
+            setStarVal('re', item.env);
+
+            // 3. 介面視覺變化
+            document.getElementById('formContainer').classList.add('editing-mode');
+            document.getElementById('formTitle').innerText = "🔄 正在修改：" + item.name;
+            document.getElementById('saveBtn').innerText = "✅ 確認修改並同步";
+            document.getElementById('cancelBtn').style.display = "block";
+
+            // 4. 自動捲動到頂部方便編輯
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetForm() {
+            document.getElementById('editId').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('note').value = '';
+            document.getElementById('url').value = '';
+            document.getElementById('formContainer').classList.remove('editing-mode');
+            document.getElementById('formTitle').innerText = "✍️ 紀錄新發現";
+            document.getElementById('saveBtn').innerText = "🚀 儲存並同步";
+            document.getElementById('cancelBtn').style.display = "none";
+            document.querySelectorAll('input[type="radio"]').forEach(r => { if(r.value == "4") r.checked = true; });
+        }
+
         function startLottery() {
             const filterType = document.getElementById('lotteryFilter').value;
             let candidates = foods.filter(f => f.totalScore >= 70);
-            if (filterType !== "全部") {
-                candidates = candidates.filter(f => f.type === filterType);
-            }
-            if(candidates.length === 0) return alert("找不到符合條件的名單");
-
+            if (filterType !== "全部") candidates = candidates.filter(f => f.type === filterType);
+            if(candidates.length === 0) return alert("沒符合的名單");
             const picked = candidates[Math.floor(Math.random() * candidates.length)];
-            document.getElementById('randomResult').innerHTML = `✨ 推薦：<span style="color:#e67e22">${picked.name}</span><br><small>(${picked.totalScore}分)</small>`;
+            document.getElementById('randomResult').innerHTML = `✨ 推薦：<span style="color:#e67e22">${picked.name}</span> (${picked.totalScore}分)`;
         }
 
         function setupUser() {
-            const name = prompt("請問您的稱呼是？", userName);
+            const name = prompt("稱呼：", userName);
             if(name) { localStorage.setItem('foodie_username', name); location.reload(); }
         }
         function showLoading(show) { document.getElementById('loadingStatus').style.display = show ? 'block' : 'none'; }
@@ -177,12 +217,12 @@
             for (let i of el) { if (i.checked) return parseInt(i.value); }
             return 4;
         }
-        function resetForm() {
-            document.getElementById('name').value = ''; document.getElementById('note').value = ''; document.getElementById('url').value = '';
-            document.querySelectorAll('input[type="radio"]').forEach(r => { if(r.value == "4") r.checked = true; });
+        function setStarVal(name, val) {
+            const el = document.getElementsByName(name);
+            el.forEach(input => { if(input.value == val) input.checked = true; });
         }
         async function removeItem(id) {
-            if(!confirm("刪除？")) return;
+            if(!confirm("確定刪除？")) return;
             showLoading(true);
             await fetch(`${API_URL}?action=delete&id=${id}`);
             await loadFromCloud();
