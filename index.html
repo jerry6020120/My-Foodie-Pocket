@@ -109,36 +109,54 @@
             showLoading(false);
         }
 
-        // ⭐ 升級版合併邏輯：URL 優先
+        // ⭐ V9.1.1 強化版合併邏輯：店名與 URL 雙重判定
         function aggregateFoods(data) {
             const groups = {};
+            
             data.forEach(item => {
-                // 正規化 URL：移除問號後的參數，確保連結一致
-                let key = "";
-                if (item.url && item.url.trim() !== "") {
-                    key = item.url.split('?')[0].trim().toLowerCase();
-                } else {
-                    key = "NAME_" + item.name.trim().toLowerCase(); // 沒 URL 就用店名
+                const rawName = item.name.trim().toLowerCase();
+                // 正規化 URL
+                let rawUrl = (item.url && item.url.trim() !== "") ? item.url.split('?')[0].trim().toLowerCase() : null;
+
+                // 找找看有沒有現有的群組「URL 相同」或是「店名相同」
+                let targetKey = null;
+                
+                for (let key in groups) {
+                    const group = groups[key];
+                    // 條件 A: 有 URL 且 URL 相同
+                    if (rawUrl && group.url && group.url.split('?')[0].toLowerCase() === rawUrl) {
+                        targetKey = key;
+                        break;
+                    }
+                    // 條件 B: 店名完全相同
+                    if (group.name.trim().toLowerCase() === rawName) {
+                        targetKey = key;
+                        break;
+                    }
                 }
 
-                if (!groups[key]) {
-                    groups[key] = { 
+                if (!targetKey) {
+                    // 沒找到重複的，建立新群組
+                    const newKey = rawUrl || ("NAME_" + rawName);
+                    groups[newKey] = { 
                         ...item, 
                         count: 1, 
                         allNotes: item.note ? [item.note] : [],
                         allIds: [item.id]
                     };
                 } else {
-                    groups[key].count += 1;
-                    groups[key].taste = (groups[key].taste + item.taste) / 2;
-                    groups[key].price = (groups[key].price + item.price) / 2;
-                    groups[key].service = (groups[key].service + item.service) / 2;
-                    groups[key].env = (groups[key].env + item.env) / 2;
-                    groups[key].totalScore = Math.round((groups[key].totalScore + item.totalScore) / 2);
-                    if (item.note) groups[key].allNotes.push(item.note);
-                    groups[key].allIds.push(item.id);
-                    // 如果這筆有 URL 但原本存的 Key 沒有，則更新它 (雖然以 URL 為 Key 時不會發生，但保留彈性)
-                    if (!groups[key].url) groups[key].url = item.url;
+                    // 找到重複了，併入現有群組
+                    const g = groups[targetKey];
+                    g.count += 1;
+                    g.taste = (g.taste + item.taste) / 2;
+                    g.price = (g.price + item.price) / 2;
+                    g.service = (g.service + item.service) / 2;
+                    g.env = (g.env + item.env) / 2;
+                    g.totalScore = Math.round((g.totalScore + item.totalScore) / 2);
+                    if (item.note) g.allNotes.push(item.note);
+                    g.allIds.push(item.id);
+                    // 如果原本沒 URL 但這筆有，補上去
+                    if (!g.url && item.url) g.url = item.url;
                 }
             });
             return Object.values(groups);
