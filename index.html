@@ -175,7 +175,7 @@
                 div.innerHTML = `
                     <div onclick="toggleDetails(${f.id})">
                         <span class="score-badge">${f.totalScore}分</span>
-                        <strong>${f.name} ${f.count > 1 ? '<small>(雙評中)</small>' : ''}</strong><br>
+                        <strong>${f.name} ${f.count > 1 ? '<small>(雙評)</small>' : ''}</strong><br>
                         <span class="type-tag">${f.type}</span>
                     </div>
                     <div id="details-${f.id}" class="details">
